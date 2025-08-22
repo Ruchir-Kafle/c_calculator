@@ -8,7 +8,7 @@
 #define MAX_CHARACTERS 22
 
 void print(char message[]) {
-    for (int i; message[i] != '\0'; i++) {
+    for (int i = 0; message[i] != '\0'; i++) {
         putchar(message[i]);
     }
 }
@@ -48,25 +48,19 @@ int main() {
     int operation;
     long int second_int = 0;
     
-    print("FIRST_STAGE");
+    print(FIRST_STAGE);
     
     while ((c = getchar()) != EOF) {
         
-        if (stage == 0) {
-            if (is_digit(c)) {
-                first_int = first_int * 10 + (c - '0');
-            }
-        } else if (stage == 1) {
-            if (c == '+' || c == '-' || c == '*' || c == '/') {
-                operation = c;
-            }
-        } else if (stage == 2) {
-            if (is_digit(c)) {
-                second_int = second_int * 10 + (c - '0');
-            }
-        } else {continue;}
-
-        putchar(c);
+        if (stage == 0 && is_digit(c)) {
+            first_int = first_int * 10 + (c - '0');
+        } else if (stage == 1 && (c == '+' || c == '-' || c == '*' || c == '/')) {
+            operation = c;
+        } else if (stage == 2 && is_digit(c)) {
+            second_int = second_int * 10 + (c - '0');
+        } else {
+            continue;
+        }
 
         if (c == '\n') {
             stage++;

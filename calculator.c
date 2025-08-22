@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 
 #define FIRST_STAGE "Input first number: "
 #define SECOND_STAGE "Input operation: "
@@ -42,7 +43,6 @@ int main() {
     int c;
 
     int stage = 0;
-    int count = 0;
 
     long int first_int = 0;
     int operation;
@@ -50,7 +50,7 @@ int main() {
     
     print(FIRST_STAGE);
     
-    while ((c = getchar()) != EOF) {
+    while ((c = getch()) != 'q') {
         
         if (stage == 0 && is_digit(c)) {
             first_int = first_int * 10 + (c - '0');
@@ -58,15 +58,13 @@ int main() {
             operation = c;
         } else if (stage == 2 && is_digit(c)) {
             second_int = second_int * 10 + (c - '0');
-        } else {
-            continue;
-        }
+        } else if (c == '\r' || c == '\n') {
 
-        if (c == '\n') {
+            putchar('\n');
             stage++;
 
             if (stage == 3) {
-                int result;
+                int result = 0;
 
                 if (operation == '+') {result = add(first_int, second_int);}
                 if (operation == '-') {result = sub(first_int, second_int);}
@@ -81,7 +79,13 @@ int main() {
 
                 print(stages[stage]);
             }
-        }        
+
+            continue;
+        } else {
+            continue;
+        }
+
+        putchar(c);     
     }
 
     return 0;
